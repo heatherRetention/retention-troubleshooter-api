@@ -1,16 +1,16 @@
 {
   "name": "retention-troubleshooter-api",
   "version": "1.0.0",
-  "description": "Remote Retention Troubleshooter API",
-  "main": "server.js",
+  "description": "API for running Retention Troubleshooter via n8n",
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "echo skipping chromium download on Render",
-    "puppeteer": "PUPPETEER_SKIP_DOWNLOAD=true"
-}
+    "postinstall": "echo skipping chromium download"
+  },
   "dependencies": {
-    "express": "^4.18.2",
+    "axios": "^1.6.8",
+    "cheerio": "^1.0.0-rc.12",
+    "express": "^4.18.4",
     "puppeteer": "^21.3.8"
   }
 }
