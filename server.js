@@ -53,7 +53,12 @@ app.post("/run-troubleshooter", async (req, res) => {
   if (!url) return res.status(400).json({ error: "Missing URL." });
 
   const fullUrls = [url, ...paths.map((p) => new URL(p, url).href)];
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({
+    headless: "new",
+    executablePath:
+      "/opt/render/.cache/puppeteer/chrome/linux-140.0.7339.82/chrome",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
   const results = [];
 
   for (const fullUrl of fullUrls) {
