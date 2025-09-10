@@ -1,5 +1,5 @@
 import express from "express";
-import puppeteer from "puppeteer"; // ✅ NOT puppeteer-core
+import puppeteer from "puppeteer";
 
 const app = express();
 app.use(express.json({ limit: "1mb" }));
@@ -53,27 +53,39 @@ app.post("/run-troubleshooter", async (req, res) => {
   if (!url) return res.status(400).json({ error: "Missing URL." });
 
   const fullUrls = [url, ...paths.map((p) => new URL(p, url).href)];
-  const browser = await puppeteer.launch({
-    headless: "new",
-    executablePath:
-      "/opt/render/.cache/puppeteer/chrome/linux-140.0.7339.82/chrome",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
-  const results = [];
 
-  for (const fullUrl of fullUrls) {
-    const page = await browser.newPage();
-    await page.goto(fullUrl, { waitUntil: "domcontentloaded", timeout: 45000 });
-    const content = await page.content();
-    results.push(extractSummaryAndReports(fullUrl, content));
-    await page.close();
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      headless: "new",
+      executablePath:
+        "/opt/render/.cache/puppeteer/chrome/linux-140.0.7339.82/chrome",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+
+    const results = [];
+
+    for (const fullUrl of fullUrls) {
+      const page = await browser.newPage();
+      await page.goto(fullUrl, {
+        waitUntil: "domcontentloaded",
+        timeout: 45000,
+      });
+      const content = await page.content();
+      results.push(extractSummaryAndReports(fullUrl, content));
+      await page.close();
+    }
+
+    await browser.close();
+    res.json({ results });
+  } catch (err) {
+    if (browser) await browser.close();
+    console.error("Troubleshooter failed:", err);
+    res.status(500).json({ error: err.message || "Unknown error" });
   }
-
-  await browser.close();
-  res.json({ results });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () =>
-  console.log(`Troubleshooter API running on port ${PORT}`)
-);
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => {
+  console.log(`Troubleshooter API running on port ${PORT}`);
+});
