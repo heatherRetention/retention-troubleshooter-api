@@ -11,6 +11,6 @@
     "axios": "^1.6.8",
     "cheerio": "^1.0.0-rc.12",
     "express": "^4.18.4",
-    "puppeteer": "^21.3.8"
+    "puppeteer": "^21.11.0"
   }
 }
