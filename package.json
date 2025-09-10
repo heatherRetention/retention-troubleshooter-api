@@ -1,0 +1,14 @@
+{
+  "name": "retention-troubleshooter-api",
+  "version": "1.0.0",
+  "description": "Remote Retention Troubleshooter API",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.3.8"
+  }
+}
