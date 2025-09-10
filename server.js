@@ -1,4 +1,3 @@
-
 import express from 'express';
 import puppeteer from 'puppeteer';
 
@@ -35,7 +34,7 @@ function extractSummaryAndReports(pageUrl, pageContent) {
     <tr><td>re_utils.js</td><td>${summary.reUtilsDetected ? "✅ Found" : "❌ Not Found"}</td></tr>
     <tr><td>Collection Fired</td><td>${summary.collectionFired ? "✅ Yes" : "❌ No"}</td></tr>
     <tr><td>Suppression Fired</td><td>${summary.suppressionFired ? "✅ Yes" : "❌ No"}</td></tr>
-  </table>\`;
+  </table>`;
 
   return { summary, markdownReport, htmlReport };
 }
