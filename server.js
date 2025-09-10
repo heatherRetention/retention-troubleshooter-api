@@ -56,7 +56,7 @@ app.post("/run-troubleshooter", async (req, res) => {
 
   let browser;
   try {
-    browser = await puppeteer.launch({
+    const browser = await puppeteer.launch({
       headless: "new",
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
