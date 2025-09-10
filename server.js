@@ -26,7 +26,7 @@ function extractSummaryAndReports(pageUrl, pageContent) {
 | Suppression Fired| ${summary.suppressionFired ? "✅ Yes" : "❌ No"} |
 `;
 
-  const htmlReport = \`
+  const htmlReport = `
   <h3>Retention Troubleshooter Report</h3>
   <strong>URL:</strong> ${pageUrl}<br/><br/>
   <table border="1" cellpadding="6" cellspacing="0">
