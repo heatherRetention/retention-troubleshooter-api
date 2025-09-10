@@ -48,6 +48,15 @@ function extractSummaryAndReports(pageUrl, pageContent) {
   return { summary, markdownReport, htmlReport };
 }
 
+const chromePath =
+  "/opt/render/.cache/puppeteer/chrome/linux-140.0.7339.82/chrome";
+
+const browser = await puppeteer.launch({
+  executablePath: chromePath,
+  headless: "new", // or true/false as needed
+  args: ["--no-sandbox", "--disable-setuid-sandbox"],
+});
+
 app.post("/run-troubleshooter", async (req, res) => {
   const { url, paths = [] } = req.body;
   if (!url) return res.status(400).json({ error: "Missing URL." });
