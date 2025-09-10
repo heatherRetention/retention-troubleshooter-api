@@ -59,8 +59,7 @@ app.post("/run-troubleshooter", async (req, res) => {
   try {
     const browser = await puppeteer.launch({
       headless: "new",
-      executablePath:
-        "/opt/render/.cache/puppeteer/chrome/linux-140.0.7339.82/chrome-linux64/chrome",
+      executablePath: puppeteer.executablePath(),
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
 
